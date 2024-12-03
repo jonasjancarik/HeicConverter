@@ -40,6 +40,7 @@ options:
   -o, --overwrite  Overwrite existing JPEG files
   --not-recursive  Do not search subdirectories
   --skip-prompt    Skip the prompt at the end
+  -q, --quality    JPEG quality (1-100, default: 90)
 ~~~~
 
 ## GUI

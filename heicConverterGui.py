@@ -42,6 +42,18 @@ class HEICConverterGUI:
         self.recursive_check = ttk.Checkbutton(master, text="Search subdirectories", variable=self.recursive_var)
         self.recursive_check.pack(anchor='w', padx=10, pady=5)
 
+        # Add quality control
+        self.quality_label = ttk.Label(master, text="JPEG Quality (1-100):")
+        self.quality_label.pack(anchor='w', padx=10, pady=5)
+        
+        self.quality_var = tk.IntVar(value=90)
+        self.quality_scale = ttk.Scale(master, from_=1, to=100, orient='horizontal',
+                                     variable=self.quality_var)
+        self.quality_scale.pack(anchor='w', padx=10, pady=5, fill='x')
+        
+        self.quality_value_label = ttk.Label(master, textvariable=self.quality_var)
+        self.quality_value_label.pack(anchor='w', padx=10)
+
         self.convert_button = ttk.Button(master, text="Convert", command=self.convert)
         self.convert_button.pack(anchor='w', padx=10, pady=5)
 
@@ -59,17 +71,18 @@ class HEICConverterGUI:
         remove = self.remove_var.get()
         overwrite = self.overwrite_var.get()
         recursive = self.recursive_var.get()
+        quality = self.quality_var.get()
 
         output_text = ""
 
         if os.path.isdir(path):
             output_text += f'Converting HEIC files in directory {path}\n'
-            converted = convert_heic_to_jpeg(path, recursive, overwrite, remove)
+            converted = convert_heic_to_jpeg(path, recursive, overwrite, remove, quality)
             output_text += f'Successfully converted {len(converted)} files\n'
 
         elif os.path.isfile(path):
             output_text += f'Converting HEIC file {path}\n'
-            convert_heic_file(path, os.path.splitext(path)[0] + ".jpg", overwrite, remove)
+            convert_heic_file(path, os.path.splitext(path)[0] + ".jpg", overwrite, remove, quality)
             output_text += 'Successfully converted file\n'
 
         else:
