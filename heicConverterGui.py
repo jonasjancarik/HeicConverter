@@ -42,13 +42,13 @@ class HEICConverterGUI:
         self.recursive_check = ttk.Checkbutton(master, text="Search subdirectories", variable=self.recursive_var)
         self.recursive_check.pack(anchor='w', padx=10, pady=5)
 
-        # Add quality control
+        # Quality control
         self.quality_label = ttk.Label(master, text="JPEG Quality (1-100):")
         self.quality_label.pack(anchor='w', padx=10, pady=5)
         
         self.quality_var = tk.IntVar(value=90)
         self.quality_scale = ttk.Scale(master, from_=1, to=100, orient='horizontal',
-                                     variable=self.quality_var)
+                                     variable=self.quality_var, command=lambda x: self.quality_var.set(round(float(x))))
         self.quality_scale.pack(anchor='w', padx=10, pady=5, fill='x')
         
         self.quality_value_label = ttk.Label(master, textvariable=self.quality_var)
